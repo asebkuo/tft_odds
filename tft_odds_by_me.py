@@ -1,16 +1,36 @@
 import math
 import random
 
+# odds of each color for each level
+# Y axis is level, X axis is color
+# These percentages come from: https://www.esportstales.com/teamfight-tactics/champion-pool-size-and-draw-chances
+odds_by_level = [
+    [1, 0, 0, 0, 0], # level 1
+    [1, 0, 0, 0, 0], # level 2
+    [.75, .25, 0, 0, 0], # level 3
+    [.55, .30, .15, 0, 0], # level 4
+    [.45, .33, .20, .02, 0], # level 5
+    [.25, .40, .30, .05, 0], # level 6
+    [.19, .30, .35, .15, .01], # level 7
+    [.16, .20, .35, .25, .04], # level 8
+    [.09, .15, .30, .30, .16] # level 9
+]
+
+
+# The number of characters in each color
+color_size = [13, 13, 13, 12, 8]
+
+# The number of each champ, based on color. For example, Cassiopeia is a white champ, so there are 29 of her in the pool.
+cardinality_by_color = [29, 22, 18, 12, 10]
+
 
 def get_odds_for_color(color, lvl):
     
-    if (color == "blue"):
-        if (lvl == 7):
-            return .35, 234, 18
-    
-    if (color == 'purple'):
-        if (lvl == 8):
-            return .25, 168, 14
+    colors = ['white', 'green', 'blue', 'purple', 'gold']
+    for i in range (0, 5):
+        if color == colors[i]:
+            return odds_by_level[lvl - 1][i], cardinality_by_color[i] * color_size[i], cardinality_by_color[i]
+        
 
 def main():
 
@@ -69,7 +89,6 @@ def main():
         average = average + trial_results[i]
     average = average / trial_number
     print("Average: " + str(math.ceil(average)))
-    #print(trial_results)
     
     # print 10th percentile and 90th percentile
     trial_results.sort()
