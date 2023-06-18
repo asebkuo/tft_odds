@@ -35,19 +35,21 @@ def get_odds_for_color(color, lvl):
 def main():
 
     # set these:
-    color, player_level = 'purple', 8
+    color, player_level = 'white', 4 
     
-    num_we_have_already = 3 # how many of the champ we already have
-    hits_desired = 6 # how many of the char we want
+    num_we_have_already = 0 # how many of the champ we already have
+    level_desired = 1 # what level we want the champ to be
     
-    contested = 3 # how many other players own of the champ
-    same_color_taken = 0 # how many of the same color have been taken. Ex: If we want a Zeri and someone has 3 Sejuanis, this would be 3 since both characters are purples.
+    contested = 6 # how many other players own of the champ
+    same_color_taken = 48 # how many of the same color have been taken. Ex: If we want a Zeri and someone has 3 Sejuanis, this would be 3 since both characters are purples.
     
 
 
     # logistics
     trial_number = 10000
     trial_results = []
+    hits_desired =  3 ** (level_desired - 1) - num_we_have_already
+    
     refresh_count = 0
     hits = 0
     chance, total_pool, champ_range = get_odds_for_color(color, player_level)
