@@ -1,6 +1,26 @@
 import math
 import random
 
+########################################
+# SET THESE VARIABLES:
+########################################
+
+champ_desired_color = 'green' 
+player_level = 6 
+
+num_we_have_already = 3 # how many of the champ we already have
+level_desired = 3 # what level we want the champ to be
+
+contested = 5 # how many other players own of the champ
+same_color_taken = 40 # how many of the same color have been taken. Ex: If we want a Zeri and someone has 3 Sejuanis, this would be 3 since both characters are purples.
+
+rolls = 25 # how many rolls you have available
+
+
+########################################
+# The calculations. Don't touch anything below this line.
+########################################
+
 # odds of each color for each level
 # Y axis is level, X axis is color
 # These percentages come from: https://www.esportstales.com/teamfight-tactics/champion-pool-size-and-draw-chances
@@ -34,25 +54,6 @@ def get_odds_for_color(color, lvl):
 
 def main():
 
-    ########################################
-    # set these:
-    ########################################
-    color, player_level = 'white', 4 
-    
-    num_we_have_already = 3 # how many of the champ we already have
-    level_desired = 3 # what level we want the champ to be
-    
-    contested = 6 # how many other players own of the champ
-    same_color_taken = 48 # how many of the same color have been taken. Ex: If we want a Zeri and someone has 3 Sejuanis, this would be 3 since both characters are purples.
-    
-    rolls = 15 # how many rolls you have available
-
-
-
-    ########################################
-    # The calculations. Don't touch anything below this line.
-    ########################################
-
     # logistics
     trial_number = 10000
     trial_results = []
@@ -60,7 +61,7 @@ def main():
     
     refresh_count = 0
     hits = 0
-    chance, total_pool, champ_range = get_odds_for_color(color, player_level)
+    chance, total_pool, champ_range = get_odds_for_color(champ_desired_color, player_level)
     total_pool = total_pool - contested - num_we_have_already - same_color_taken
     champ_range = champ_range - num_we_have_already - contested
 
@@ -88,7 +89,7 @@ def main():
         # reset counts
         refresh_count = 0
         hits = 0
-        chance, total_pool, champ_range = get_odds_for_color(color, player_level)
+        chance, total_pool, champ_range = get_odds_for_color(champ_desired_color, player_level)
         total_pool = total_pool - contested - num_we_have_already - same_color_taken
         champ_range = champ_range - num_we_have_already - contested
         
