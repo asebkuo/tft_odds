@@ -34,16 +34,24 @@ def get_odds_for_color(color, lvl):
 
 def main():
 
+    ########################################
     # set these:
+    ########################################
     color, player_level = 'white', 4 
     
-    num_we_have_already = 0 # how many of the champ we already have
-    level_desired = 1 # what level we want the champ to be
+    num_we_have_already = 3 # how many of the champ we already have
+    level_desired = 3 # what level we want the champ to be
     
     contested = 6 # how many other players own of the champ
     same_color_taken = 48 # how many of the same color have been taken. Ex: If we want a Zeri and someone has 3 Sejuanis, this would be 3 since both characters are purples.
     
+    rolls = 15 # how many rolls you have available
 
+
+
+    ########################################
+    # The calculations. Don't touch anything below this line.
+    ########################################
 
     # logistics
     trial_number = 10000
@@ -85,15 +93,28 @@ def main():
         champ_range = champ_range - num_we_have_already - contested
         
 
-    # print the average 
+
+    ########################################
+    # print results
+    ########################################
+    
+    trial_results.sort(reverse=False)
+    
+    # if rolls is defined, give the percentage of trials that were less than or equal to the number of rolls
+    if rolls != None:
+        for i in range (0, trial_number):
+            if trial_results[i] > rolls:
+                print(f"Percent chance you got it within {rolls} rolls: " + str(100 * i / trial_number) + "%")
+                break
+    
+    # the average 
     average = 0
     for i in range (0, trial_number):
         average = average + trial_results[i]
     average = average / trial_number
     print("Average: " + str(math.ceil(average)))
     
-    # print 10th percentile and 90th percentile
-    trial_results.sort()
+    # 10th percentile and 90th percentile
     print("90th percentile: " + str(trial_results[math.ceil(trial_number * .1)]))
     print("10th percentile: " + str(trial_results[math.ceil(trial_number * .9)]))
 
